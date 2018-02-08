@@ -78,12 +78,12 @@ resource "aws_security_group" "logstash_elb_security_group" {
 
 
 resource "aws_launch_configuration" "client" {
-  name_prefix = "logstash-${var.es_cluster}-client-nodes"
+  name_prefix = "logstash-${var.logstash_cluster}-client-nodes"
   image_id = "${data.aws_ami.logstash.id}"
   instance_type = "${var.node_instance_type}"
   security_groups = ["${aws_security_group.logstash_security_group.id}"]
   associate_public_ip_address = true
-  iam_instance_profile = "${aws_iam_instance_profile.logstash.id}"
+  #iam_instance_profile = "${aws_iam_instance_profile.logstash.id}"
   user_data = "${data.template_file.client_userdata_script.rendered}"
   key_name = "${var.key_name}"
 
@@ -102,7 +102,7 @@ resource "aws_autoscaling_group" "client_nodes" {
   force_delete = true
   launch_configuration = "${aws_launch_configuration.client.id}"
 
-  load_balancers = ["${aws_elb.logstash_client_lb.id}"]
+  #load_balancers = ["${aws_elb.logstash_client_lb.id}"]
 
   vpc_zone_identifier = ["${data.aws_subnet_ids.selected.ids}"]
 
