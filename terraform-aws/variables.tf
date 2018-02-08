@@ -35,3 +35,12 @@ variable "key_name" {
 variable "node_instance_type" {
          default = "t2.medium"
 }
+
+
+variable "conf_1_name" {
+	default = ""
+} 
+
+variable "conf_1_file" {
+        default = ""
+} 
