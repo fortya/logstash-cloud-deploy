@@ -1,6 +1,7 @@
 {
   "variables": {
-    "placeholder": "tbd"
+	"aws_region": "us-east-1",
+	"aws_az": "us-east-1e"
   },
   "description": "Logstash Image",
   "builders": [
