@@ -25,5 +25,5 @@ variable "availability_zones" {
 variable "key_name" {
   description = "Key name to be used with the launched EC2 instances."
   default = "logstash"
-}`
+}
 
