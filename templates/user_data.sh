@@ -2,5 +2,5 @@
 
 apt-get update
 
-cd /etc/logstash/conf.d
-curl -o ${conf_1_name} ${conf_1_file}
+# conf.d files
+curl -o /etc/logstash/conf.d/${conf_1_name} ${conf_1_file}
