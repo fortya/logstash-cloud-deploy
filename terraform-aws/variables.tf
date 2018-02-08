@@ -31,3 +31,7 @@ variable "key_name" {
   default = "logstash"
 }
 
+
+variable "node_instance_type" {
+         default = "t2.medium"
+}
