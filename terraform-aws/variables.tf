@@ -16,6 +16,10 @@ variable "aws_region" {
 }
 
 
+variable "nodes_count" {
+  default = "2"
+}
+
 variable "availability_zones" {
   type = "list"
   description = "AWS region to launch servers"
