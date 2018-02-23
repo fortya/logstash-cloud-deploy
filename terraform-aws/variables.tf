@@ -22,12 +22,6 @@ variable "public_subnets" {
   type        = "list"
 }
 
-# TODO - Use tags for public/private subnets
-variable "private_subnets" {
-  description = "List of public subnet ids"
-  type        = "list"
-}
-
 variable "admin_cidrs" {
   description = "List of CIDRs to whitelist for SSH access"
   type        = "list"
