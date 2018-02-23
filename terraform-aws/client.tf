@@ -22,7 +22,7 @@ resource "aws_autoscaling_group" "client_nodes" {
   default_cooldown     = 30
   force_delete         = true
   launch_configuration = "${aws_launch_configuration.client.id}"
-  vpc_zone_identifier  = ["${var.private_subnets}"]
+  vpc_zone_identifier  = ["${var.public_subnets}"]
 
   tag {
     key                 = "Name"
