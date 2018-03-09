@@ -1,5 +1,5 @@
 resource "aws_security_group" "logstash_security_group" {
-  name        = "logstash-${var.logstash_cluster}-security-group"
+  name        = "${var.logstash_cluster}-logstash-sg"
   description = "SG for Logstash instances sitting on private subnets"
   vpc_id      = "${var.vpc_id}"
   tags        = "${merge(var.global_tags,map("Name","${var.logstash_cluster}-logstash-sg"))}"
@@ -40,7 +40,7 @@ resource "aws_security_group" "logstash_security_group" {
 }
 
 resource "aws_security_group" "logstash_elb_security_group" {
-  name        = "logstash-${var.logstash_cluster}-elb-security-group"
+  name        = "${var.logstash_cluster}-logstash-lb-sg"
   description = "SG for Logstash Load Balancer sitting on public subnets"
   vpc_id      = "${var.vpc_id}"
   tags        = "${merge(var.global_tags,map("Name","${var.logstash_cluster}-logstash-lb-sg"))}"

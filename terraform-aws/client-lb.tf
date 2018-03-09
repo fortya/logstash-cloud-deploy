@@ -1,11 +1,11 @@
 resource "aws_lb" "logstash" {
-  name               = "logstash-${var.logstash_cluster}-client-lb"
+  name               = "${var.logstash_cluster}-logstash-lb"
   security_groups    = ["${aws_security_group.logstash_elb_security_group.id}"]
   subnets            = ["${var.public_subnets}"]
   internal           = false
   load_balancer_type = "application"
   idle_timeout       = 400
-  tags               = "${merge(var.global_tags,map("Name","${var.logstash_cluster}-logstash-client-lb"))}"
+  tags               = "${merge(var.global_tags,map("Name","${var.logstash_cluster}-logstash-lb"))}"
 }
 
 resource "aws_lb_listener" "logstash" {
@@ -20,7 +20,7 @@ resource "aws_lb_listener" "logstash" {
 }
 
 resource "aws_lb_target_group" "logstash" {
-  name     = "logstash-${var.logstash_cluster}-client-lb-tg"
+  name     = "logstash-${var.logstash_cluster}-lb-tg"
   port     = 5044
   protocol = "HTTP"
   vpc_id   = "${var.vpc_id}"
