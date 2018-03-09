@@ -6,19 +6,48 @@ variable "environment" {
   default = "default"
 }
 
+variable "aws_region" {
+  description = "Aws region where logstash should be provisioned"
+  type        = "string"
+}
+
+variable "global_tags" {
+  type    = "map"
+  default = {}
+}
+
+variable "global_tags_for_asg" {
+  description = "There is a known issue in terraform where tags for ASG are provided diferently than tags for other resources. ASG tags should have key, value, and propagate_at_launch attributes."
+  type        = "list"
+  default     = []
+
+  # default = [
+  #   {
+  #     key = "Foo"
+  #     value = "Bar"
+  #     propagate_at_launch = true
+  #   },
+  #   ...
+  # ]
+}
+
 variable "vpc_id" {
   description = "VPC ID where logstash should be provisioned"
   type        = "string"
 }
 
-variable "aws_region" {
-  description = "Aws region where logstash should be provisioned"
-  type = "string"
-}
-
-# TODO - Use tags for public/private subnets
 variable "public_subnets" {
   description = "List of public subnet ids"
+  type        = "list"
+}
+
+variable "public_subnets_cidrs" {
+  description = "Private subnets cidrs (ie. ['10.0.1.0/24', '10.0.1.0/24'])"
+  type        = "list"
+}
+
+variable "private_subnets" {
+  description = "List of private subnet ids"
   type        = "list"
 }
 

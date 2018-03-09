@@ -1,12 +1,8 @@
 resource "aws_security_group" "logstash_security_group" {
-  name        = "logstash-${var.logstash_cluster}-security-group"
-  description = "Logstash ports with ssh"
+  name        = "${var.logstash_cluster}-logstash-sg"
+  description = "SG for Logstash instances sitting on private subnets"
   vpc_id      = "${var.vpc_id}"
-
-  tags {
-    Name    = "${var.logstash_cluster}-logstash"
-    cluster = "${var.logstash_cluster}"
-  }
+  tags        = "${merge(var.global_tags,map("Name","${var.logstash_cluster}-logstash-sg"))}"
 
   # ssh access from everywhere
   ingress {
@@ -22,8 +18,8 @@ resource "aws_security_group" "logstash_security_group" {
     from_port   = 5044
     to_port     = 5044
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "CHANGE!!! - Allow logstash traffic from everywhere"
+    cidr_blocks = ["${var.public_subnets_cidrs}"]
+    description = "Allow logstash traffic from public subnets"
   }
 
   ingress {
@@ -44,21 +40,17 @@ resource "aws_security_group" "logstash_security_group" {
 }
 
 resource "aws_security_group" "logstash_elb_security_group" {
-  name        = "logstash-${var.logstash_cluster}-elb-security-group"
-  description = "Logstash HTTP access from outside"
+  name        = "${var.logstash_cluster}-logstash-lb-sg"
+  description = "SG for Logstash Load Balancer sitting on public subnets"
   vpc_id      = "${var.vpc_id}"
-
-  tags {
-    Name    = "${var.logstash_cluster}-kibana"
-    cluster = "${var.logstash_cluster}"
-  }
+  tags        = "${merge(var.global_tags,map("Name","${var.logstash_cluster}-logstash-lb-sg"))}"
 
   ingress {
     from_port   = 5044
     to_port     = 5044
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow 5044 access from the internet"
+    description = "Allow logstash traffic from the internet"
   }
 
   egress {
