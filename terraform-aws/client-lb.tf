@@ -5,12 +5,7 @@ resource "aws_lb" "logstash" {
   internal           = false
   load_balancer_type = "application"
   idle_timeout       = 400
-
-  tags {
-    Name        = "logstash-${var.logstash_cluster}-client-lb"
-    Environment = "${var.environment}"
-    Cluster     = "${var.environment}-${var.logstash_cluster}"
-  }
+  tags               = "${merge(var.global_tags,map("Name","${var.logstash_cluster}-logstash-client-lb"))}"
 }
 
 resource "aws_lb_listener" "logstash" {
